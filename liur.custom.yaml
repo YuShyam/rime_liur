@@ -1,0 +1,13 @@
+#https://rime-aca.tumblr.com/post/67241713724/rime%E6%96%B9%E6%A1%88%E8%A3%BD%E4%BD%9C%E8%A9%B3%E8%A7%A3
+patch:
+  translator/enable_user_dict: true			#使用字典檔
+  translator/enable_sentence: true			#打開連續輸入
+  #translator/enable_encoder: true			#否開啓自動造詞
+  #translator/encode_commit_history: true	#是否對已上屛詞自動成詞
+  translator/enable_completion: true		#打開逐碼提示碼
+  "switches/@0/states": [ 中文, 英文 ]  		#半全開關 (0為關閉，1為開啟)
+  "switches/@1/states": [ 半形, 全形 ]  		#半全開關 (0為關閉，1為開啟)
+  "switches/@1/reset": 0  					#半全開關 (0為關閉，1為開啟)
+  "switches/@2/reset": 0  					#反查開關 (0為關閉，1為開啟)
+  key_binder/bindings:
+    - { when: always, accept: Shift+space, send: space }
