@@ -26,7 +26,7 @@ style:
 
 preset_keys:
   # 编辑
-  Shift_L: {label: Shift, preview: '⇪', functional: false, send: Shift_L, shift_lock: ascii_long}
+  Shift_L: {label: Shift, preview: '⇪', functional: false, send: Shift_L, shift_lock: long}
   Hide: {label: 隱藏, preview:'⌨️', send: BACK}
   BackSpace: {label: 倒退, preview: '⇦', repeatable: true, functional: false, send: BackSpace}
   space: {repeatable: false, preview: ' ', functional: false, label: '', send: space}
