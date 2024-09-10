@@ -1,0 +1,141 @@
+# Trime style settings
+# encoding: utf-8
+
+name: liur_Shyam
+author: 'Shyam'
+__include: tongwenfeng.trime:/
+
+style:
+  candidate_text_size: 28  #候選字型大小 原始值 18
+  comment_text_size: 14 #編碼提示字型大小 原始值 12
+  key_long_text_size: 13 #長標籤字型大小 原始值 16
+  key_text_size: 22 #鍵字型大小 原始值 24
+  enter_labels:
+    send: 送出
+  keyboards: #键盘配置：自动键盘、字母、数字、符号
+    __append:
+
+  enter_labels:  # 定义Enter键的文本
+    go: 前往
+    done: 完成
+    next: 下個
+    pre:  上個
+    search: 搜索
+    send: 送出
+    default: Enter   # 定义默认Enter键的文本
+
+preset_keys:
+  # 编辑
+  Shift_L: {label: Shift, preview: '⇪', functional: false, send: Shift_L, shift_lock: long}
+  Hide: {label: 隱藏, preview:'⌨️', send: BACK}
+  BackSpace: {label: 倒退, preview: '⇦', repeatable: true, functional: false, send: BackSpace}
+  space: {repeatable: false, preview: ' ', functional: false, label: '', send: space}
+  space1: {repeatable: false, label: '空格', functional: false, send: space}
+  Page_Up: {label: 上頁, send: Page_Up, functional: false}
+  Page_Down: {label: 下頁, send: Page_Down, functional: false}
+  select_all: {label: 全選, functional: false, send: Control+a}
+  Clear: {label: 清除, text: "{Control+a}{BackSpace}"}
+  cut: {label: 剪下, functional: false, send: Control+x}
+  copy: {label: 複製, functional: false, send: Control+c}
+  paste: {label: 貼上, functional: false, send: Control+v}
+  paste_clip: {label: 貼上, send: function, command: clipboard}
+  # rime状态
+  Mode_switch: {toggle: ascii_mode, functional: false, send: Mode_switch, states: [ 中文, 英文 ]}
+  # 切换键盘
+  Keyboard_symbols: {label: 符號, send: Eisu_toggle, select: symbols}
+  # trime设置  
+  Menu: {label: 設定, functional: false, send: Menu}
+  
+preset_keyboards:
+    
+  default:
+    name: 預設26鍵
+    author: "Shyam"    
+    ascii_mode: 0
+    full_shape: 0
+    width: 10
+    lock: true #切換程序時記憶鍵盤        
+    keys:
+    # 第 1 行
+    - {click: 'q', long_click: '!', swipe_up: '!', swipe_right: '!', swipe_down: 1, swipe_left: 1, key_back_color: bh1, key_text_color: th1}
+    - {click: 'w', long_click: '@', swipe_up: '@', swipe_right: '@', swipe_down: 2, swipe_left: 2, key_back_color: bh1, key_text_color: th1}
+    - {click: 'e', long_click: '#', swipe_up: '#', swipe_right: '#', swipe_down: 3, swipe_left: 3, key_back_color: bh1, key_text_color: th1}
+    - {click: 'r', long_click: '$', swipe_up: '$', swipe_right: '$', hint: 4, swipe_down: 4, swipe_left: 4, key_back_color: bh1, key_text_color: th1}
+    - {click: 't', long_click: '%', swipe_up: '%', swipe_right: '%', swipe_down: 5, swipe_left: 5, key_back_color: bh1, key_text_color: th1}
+    - {click: 'y', long_click: '^', swipe_up: '^', swipe_right: '^', swipe_down: 6, swipe_left: 6, key_back_color: bh1, key_text_color: th1}
+    - {click: 'u', long_click: '&', swipe_up: '&', swipe_right: '&', hint: 7, swipe_down: 7, swipe_left: 7, key_back_color: bh1, key_text_color: th1}
+    - {click: 'i', long_click: '*', swipe_up: '*', swipe_right: '*', swipe_down: 8, swipe_left: 8, key_back_color: bh1, key_text_color: th1}
+    - {click: 'o', long_click: '(', swipe_up: '(', swipe_right: '(', swipe_down: 9, swipe_left: 9, key_back_color: bh1, key_text_color: th1}
+    - {click: 'p', long_click: ')', swipe_up: ')', swipe_right: ')', swipe_down: 0, swipe_left: 0, key_back_color: bh1, key_text_color: th1}
+
+    # 第 2 行
+    - {width: 5, key_back_color: bh2, key_text_color: th2}
+    - {click: 'a', long_click: select_all, swipe_left: Left, swipe_right: Right, swipe_up: Up, swipe_down: Down, key_back_color: bh2, key_text_color: th2}
+    - {click: 's', long_click: '~', swipe_right: '~', swipe_up: '~', key_back_color: bh2, key_text_color: th2}
+    - {click: 'd', long_click: '-', swipe_up: '-', swipe_right: '-', hint: '_', swipe_down: '_', swipe_left: '_', key_back_color: bh2, key_text_color: th2}
+    - {click: 'f', long_click: '=', swipe_up: '=', swipe_right: '=', hint: '+', swipe_down: '+', swipe_left: '+', key_back_color: bh2, key_text_color: th2}
+    - {click: 'g', long_click: liquid_keyboard_clipboard, hint: "✜", swipe_left: Left, swipe_right: Right, swipe_up: Up, swipe_down: Down, key_back_color: bh2, key_text_color: th2}
+    - {click: 'h', long_click: '[]{Left}', swipe_left: '[', swipe_right: ']', key_back_color: bh2, key_text_color: th2}
+    - {click: 'j', long_click: '{}{Left}', swipe_left: '{', swipe_right: '}', key_back_color: bh2, key_text_color: th2}
+    - {click: 'k', long_click: ':', swipe_up: ':', swipe_right: ':', hint: '\', swipe_down: '\', swipe_left: '\', key_back_color: bh2, key_text_color: th2}
+    - {click: 'l', long_click: ';', swipe_up: ';', swipe_right: ';', hint: '|', swipe_down: '|', swipe_left: '|', key_back_color: bh2, key_text_color: th2}
+    - {width: 5, key_back_color: bh2, key_text_color: th2}
+
+    # 第 3 行
+    - {click: Shift_L, width: 15, key_text_size: "18", hilited_key_back_color: benter, key_back_color: bbs, key_text_color: tbs}
+    - {click: z, long_click: '`', key_back_color: bh3, key_text_color: th3}
+    - {click: x, long_click: cut, key_back_color: bh3, key_text_color: th3}
+    - {click: c, long_click: copy, key_back_color: bh3, key_text_color: th3}
+    - {click: v, long_click: paste_clip, swipe_down: paste, key_back_color: bh3, key_text_color: th3}
+    - {click: b, long_click: "'", swipe_up: "'", swipe_right: "'", hint: '/', swipe_down: "/", swipe_left: "/", key_back_color: bh3, key_text_color: th3}
+    - {click: n, long_click: '"', swipe_up: '"', swipe_right: '"', key_back_color: bh3, key_text_color: th3}
+    - {click: m, long_click: '?', swipe_up: '?', swipe_right: '?', hint: '|', swipe_down: '|', swipe_left: '|', key_back_color: bh3, key_text_color: th3}
+    - {click: BackSpace, width: 15, key_text_size: "18", swipe_up: Clear, swipe_right: Clear, key_back_color: bbs, key_text_color: tbs}
+
+    # 第 4 行
+    - {click: Keyboard_number, composing: Page_Up, long_click: Keyboard_symbols, width: 13.5, key_text_size: "18", key_back_color: bgn, key_text_color: tgn}
+    - {click: Mode_switch, composing: Page_Down, long_click: Theme_settings, swipe_down: Color_switch, swipe_up: Color_switch, width: 13.5, key_text_size: "18", key_back_color: bgn, key_text_color: tgn}
+    - {click: ',', long_click: '<>{Left}', swipe_left: '<', swipe_right: '>', key_back_color: bh4, key_text_color: th4}
+    - {click: space, swipe_left: "Schema_switch", swipe_right: "Schema_switch", swipe_up: Schema_switchcn, width: 27, key_back_color: bkg, key_text_color: tkg}
+    - {click: '.', label: '.', long_click: Keyboard_bqrw, key_back_color: bh4, key_text_color: th4}
+    - {click: Hide, long_click: Menu , width: 13.5, key_text_size: "18",  key_back_color: bgn, key_text_color: tgn}
+    - {click: Return, composing: Return1, swipe_up: Escape, width: 13.5, key_back_color: benter, key_text_color: tenter}
+
+  qwerty:
+    __include: preset_keyboards/default
+
+  bopomofo:
+    __include: trime:/preset_keyboards/bopomofo
+
+  number:
+    full_shape: 0  
+    __include: tongwenfeng.trime:/preset_keyboards/number
+    __patch:
+      'keys/@0/long_click': '^'                             # 第 1 列
+      'keys/@1/long_click': '%'
+      'keys/@5/click': 'liquid_keyboard_clipboard'
+      'keys/@5/long_click': '?'
+      'keys/@6/click': '[]{Left}'                           # 第 2 列
+      'keys/@6/long_click': '_'
+      'keys/@7/click': '-'
+      'keys/@7/long_click': '±'
+      'keys/@11/label': ''
+      'keys/@11/click': 'space1'
+      'keys/@12/click': '(){Left}'                          # 第 3 列
+      'keys/@12/long_click': '!'
+      'keys/@13/click': '*'
+      'keys/@13/long_click': '×'
+      'keys/@15/long_click': 'paste_clip'
+      'keys/@15/swipe_up': 'paste'
+      'keys/@16/long_click': 'copy'
+      'keys/@17/click': 'BackSpace'                         # 第 3 列尾
+      'keys/@17/swipe_up': 'Clear'
+      'keys/@17/long_click': 'Clear'
+      'keys/@19/long_click': '÷'
+
+  symbols:
+    __include: trime:/preset_keyboards/symbols
+    __patch:
+      'keys/@37/long_click': ''
+      'keys/@38/long_click': ''
+      'keys/@42/click': 'Keyboard_bqrw'
