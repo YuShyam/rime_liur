@@ -96,7 +96,7 @@ preset_keyboards:
     - {click: Keyboard_number, composing: Page_Up, long_click: Keyboard_symbols, width: 13.5, key_text_size: "19", key_back_color: bgn, key_text_color: tgn}
     - {click: Mode_switch, composing: Page_Down, long_click: Theme_settings, swipe_down: Color_switch, swipe_up: Color_switch, width: 13.5, key_text_size: "19", key_back_color: bgn, key_text_color: tgn}
     - {click: ',', long_click: '<>{Left}', swipe_left: '<', swipe_right: '>', key_back_color: bh4, key_text_color: th4}
-    - {click: space, swipe_left: "Schema_switch", swipe_right: "Schema_switch", swipe_up: Schema_switchcn, width: 27, key_text_size: "19", key_back_color: bkg, key_text_color: tkg}
+    - {click: space, swipe_left: "Schema_switch", swipe_right: "Schema_switch", swipe_up: Schema_switchcn, width: 26, key_text_size: "19", key_back_color: bkg, key_text_color: tkg}
     - {click: '.', label: '.', long_click: Keyboard_bqrw, key_back_color: bh4, key_text_color: th4}
     - {click: Hide, long_click: Menu , width: 13.5, key_text_size: "19",  key_back_color: bgn, key_text_color: tgn}
     - {click: Return, composing: Return1, swipe_up: Escape, width: 13.5, key_text_size: "19", key_back_color: benter, key_text_color: tenter}
