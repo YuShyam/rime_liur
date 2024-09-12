@@ -94,11 +94,11 @@ preset_keyboards:
 
     # 第 4 行
     - {click: Keyboard_number, composing: Page_Up, long_click: Keyboard_symbols, width: 13.5, key_text_size: "19", key_back_color: bgn, key_text_color: tgn}
-    - {click: Mode_switch, composing: Page_Down, long_click: Theme_settings, swipe_down: Color_switch, swipe_up: Color_switch, width: 13.5, key_text_size: "19", key_back_color: bgn, key_text_color: tgn}
+    - {click: Hide, composing: Page_Down, long_click: Theme_settings, swipe_down: Color_switch, swipe_up: Color_switch, width: 13.5, key_text_size: "19", key_back_color: bgn, key_text_color: tgn}
     - {click: ',', long_click: '<>{Left}', swipe_left: '<', swipe_right: '>', key_back_color: bh4, key_text_color: th4}
     - {click: space, swipe_left: "Schema_switch", swipe_right: "Schema_switch", swipe_up: Schema_switchcn, width: 26, key_text_size: "19", key_back_color: bkg, key_text_color: tkg}
     - {click: '.', label: '.', long_click: Keyboard_bqrw, key_back_color: bh4, key_text_color: th4}
-    - {click: Hide, long_click: Menu , width: 13.5, key_text_size: "19",  key_back_color: bgn, key_text_color: tgn}
+    - {click: Mode_switch, long_click: Menu , width: 13.5, key_text_size: "19",  key_back_color: bgn, key_text_color: tgn}
     - {click: Return, composing: Return1, swipe_up: Escape, width: 13.5, key_text_size: "19", key_back_color: benter, key_text_color: tenter}
 
   qwerty:
@@ -108,30 +108,47 @@ preset_keyboards:
     __include: trime:/preset_keyboards/bopomofo
 
   number:
-    full_shape: 0
     __include: tongwenfeng.trime:/preset_keyboards/number
+    # 自定義參數
+    ascii_mode: 1
+    full_shape: 0
     __patch:
       'keys/@0/long_click': '^'                             # 第 1 列
+      'keys/@1/key_text_size': '19'
       'keys/@1/long_click': '%'
-      'keys/@5/click': 'liquid_keyboard_clipboard'
-      'keys/@5/long_click': '?'
+      'keys/@5/click': 'BackSpace'
+      'keys/@5/key_text_size': '19'
+      'keys/@5/swipe_up': 'Clear'
+      'keys/@5/long_click': 'Clear'
       'keys/@6/click': '[]{Left}'                           # 第 2 列
       'keys/@6/long_click': '_'
       'keys/@7/click': '-'
+      'keys/@7/key_text_size': '19'
       'keys/@7/long_click': '±'
       'keys/@11/label': ''
       'keys/@11/click': 'space1'
+      'keys/@11/key_text_size': '19'
+      'keys/@11/long_click': '?'
       'keys/@12/click': '(){Left}'                          # 第 3 列
       'keys/@12/long_click': '!'
       'keys/@13/click': '*'
+      'keys/@13/key_text_size': '19'
       'keys/@13/long_click': '×'
       'keys/@15/long_click': 'paste_clip'
       'keys/@15/swipe_up': 'paste'
       'keys/@16/long_click': 'copy'
-      'keys/@17/click': 'BackSpace'                         # 第 3 列尾
-      'keys/@17/swipe_up': 'Clear'
-      'keys/@17/long_click': 'Clear'
-      'keys/@19/long_click': '÷'
+      'keys/@17/click': '/'                                 # 第 3 列尾
+      'keys/@17/key_text_size': '19'
+      'keys/@17/long_click': '÷'
+      'keys/@18/key_text_size': '19'
+      'keys/@19/click': 'Hide'
+      'keys/@19/key_text_size': '19'
+      'keys/@19/long_click': 'liquid_keyboard_clipboard'
+      'keys/@20/click': '='
+      'keys/@20/long_click': '≠'
+      'keys/@22/click': '.'
+      'keys/@22/long_click': 'Keyboard_bqrw'
+      'keys/@23/key_text_size': '19'
 
   symbols:
     __include: trime:/preset_keyboards/symbols
