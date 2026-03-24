@@ -25,3 +25,80 @@ sort: original	#按 字詞  排序 輸入original,以 字詞頻  排序 輸入 b
 ⁽	,th[
 ⁾	,th]
 🥀	,flower
+
+# ==========================================
+# 以下為 Antigravity 擴充的實用 Unicode 資料群
+# ==========================================
+
+# 1. 下標數字 (對應上標的 ,th，此處使用 ,bd 代表 bottom down)
+₀	,bdo
+₁	,bde
+₂	,bdr
+₃	,bds
+₄	,bdf
+₅	,bdw
+₆	,bdl
+₇	,bdc
+₈	,bdb
+₉	,bdk
+₊	,bdj
+₋	,bde
+₌	,bdr
+₍	,bd[
+₎	,bd]
+
+# 2. 圓圈數字 (前綴 ,cc 代表 circle char，依樣根據 ERSFWLCBKO 規則)
+⓪	,cco
+①	,cce
+②	,ccr
+③	,ccs
+④	,ccf
+⑤	,ccw
+⑥	,ccl
+⑦	,ccc
+⑧	,ccb
+⑨	,cck
+⑩	,cco
+
+# 3. 實用外框與方塊狀態 (前綴 ,bx 代表 box)
+☐	,bx
+☑	,bxv
+☒	,bxx
+■	,bxf
+□	,bxe
+
+# 4. 常見方向箭頭 (前綴 ,ar 代表 arrow，搭配 u/d/l/r)
+←	,arl
+↑	,aru
+→	,arr
+↓	,ard
+↔	,arlr
+↕	,arud
+↖	,arul
+↗	,arur
+↘	,ardr
+↙	,ardl
+
+# 5. 實用幾何與文字記號
+★	,star
+☆	,star
+♥	,heart
+♡	,heart
+✓	,ok
+✗	,no
+♪	,music
+♫	,music
+※	,ref
+
+# 6. Emoji 表情與情境快搜
+✨	,star
+🔥	,fire
+🎉	,party
+🚀	,rocket
+✅	,ok
+❌	,no
+⚠️	,warn
+💡	,idea
+👍	,good
+👋	,hi
+😂	,haha
