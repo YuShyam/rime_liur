@@ -23,6 +23,8 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesInstallIn64BitMode=x64
 PrivilegesRequired=admin
+RestartIfNeededByRun=no
+CloseApplications=no
 
 [Languages]
 Name: "default"; MessagesFile: "compiler:Default.isl"
