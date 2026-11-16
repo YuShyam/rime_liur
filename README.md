@@ -5,28 +5,15 @@
 
 ---
 
-## ⚡ 【防失憶】30 秒極速安裝速查卡 (Quickstart)
+## ⚡ 1 秒開箱即用快速下載 (Downloads)
 
-> **換新手機或重灌電腦時，看這裡 2 步搞定，免翻說明書！**
+> **免繁瑣設定！直接下載整合安裝檔，裝好即可開始打字：**
 
-### 📱 Android 同文輸入法 (Trime) · 30 秒安裝
-1. **下載最新安裝包**：
-   手機瀏覽器直接點擊下載 ➔ 👉 **[最新 rime_liur_android.zip 下載直鏈](https://github.com/YuShyam/rime_liur/releases/latest/download/rime_liur_android.zip)**
-2. **匯入與部署**：
-   - 打開手機端 **同文輸入法 (Trime)** App。
-   - 進入 **「主題 / 方案」** ➔ 點擊選單中的 **「從 ZIP 匯入」** ➔ 選取下載的 `rime_liur_android.zip`。
-   - 在主題清單中點選 **`liur_Shyam_2026.11`**。
-   - 回到 App 首頁點擊大顆的 **「重新部署 (Deploy)」** ➔ 大功告成！
-
----
-
-### 💻 Windows 小狼毫 (Weasel) · 一鍵無腦安裝
-1. **下載並安裝小狼毫主程式**（若新電腦尚未安裝）：[小狼毫官方下載](https://rime.im/download/)。
-2. **一鍵套用特製方案**：
-   - 下載 ➔ 👉 **[最新 rime_liur_windows.zip 下載直鏈](https://github.com/YuShyam/rime_liur/releases/latest/download/rime_liur_windows.zip)**。
-   - 解壓縮後，直接雙擊執行 **`1_Install_Windows.cmd`**。
-   - 腳本將自動完成檔案精準過濾拷貝與觸發重新部署。
-   - 按快捷鍵 `Ctrl + \` 或 `F4` 切換至「嘸蝦米」即可開始打字！
+| 平台 | 推薦安裝方式 | 檔案下載 | 特色說明 |
+| :--- | :--- | :--- | :--- |
+| **💻 Windows** | **小狼毫一鍵整合安裝包** | 👉 **[weasel-liur-setup.exe (前往 Releases 下載)](https://github.com/YuShyam/rime_liur/releases)** | **零彈窗全自動**：內建小狼毫驅動 + 動態註冊表感應 + 嘸蝦米字庫，雙擊後自動靜默完成部署。 |
+| **📱 Android** | **同文輸入法預裝特製版** | 👉 **[trime-liur.apk (前往 Releases 下載)](https://github.com/YuShyam/rime_liur/releases)** | **開箱即用**：免去手動 ZIP 匯入步驟，安裝打開鍵盤預設即是嘸蝦米與 2026.11 旗艦主題。 |
+| **📦 跨平台手動包** | **純設定檔壓縮包** | 👉 **[ZIP 方案包 (Releases)](https://github.com/YuShyam/rime_liur/releases)** | 提供進階使用者自行拷貝至既有 Rime 目錄手動維護。 |
 
 ---
 
@@ -61,8 +48,17 @@
 
 ---
 
-## 🚀 雲端自動化 (GitHub Actions CI/CD)
+## 🚀 雲端自動化 (GitHub Actions)
 
-本專案已配置全自動發布工作流 (`.github/workflows/package-and-release.yml`)：
-* 每次 Push 調整鍵盤配置或更新詞庫時，雲端將於 10 秒內自動封裝最新版的 **`rime_liur_android.zip`** 與 **`rime_liur_windows.zip`**。
-* 自動更新 GitHub Releases，確保你隨時存取的「固定下載直鏈」永遠都是最新的心血成果！
+本專案配置了獨立且受控的純手動雲端工作流：
+* **`build-windows.yml`**：在 GitHub Actions 手動點擊觸發，自動拉取官方最新 Weasel 核心並打包成 `weasel-liur-setup.exe`。
+* **`build-android.yml`**：在 GitHub Actions 手動點擊觸發，自動拉取官方最新 Trime 核心注入嘸蝦米資產並完成數位簽名。
+* **日常微調安全**：日常修改同文堂佈景或字碼並推送 Commit，**絕不會自動洗版觸發發布**，只有在你想正式產出大版本時手動執行！
+
+---
+
+## 📌 著作權與商標聲明 (Disclaimer)
+
+1. 本專案為個人研究、交流與推廣輸入法工學之非營利開源專案。
+2. 「嘸蝦米」及「Boshiamy」為行易有限公司之註冊商標，本專案僅提供適用於 RIME 引擎之第三方相容設定，非官方軟體。
+3. 本方案字碼對照表引用自社群公開資料庫（hsuanyi-chou/rime-liur），特此致謝。若原權利人有任何疑慮，請透過 Issue 聯繫處理。

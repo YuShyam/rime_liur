@@ -1,0 +1,91 @@
+name: Build Android Trime APK
+
+on:
+  workflow_dispatch: # 純手動觸發，只有想發布 Android APK 時才手動點擊
+
+jobs:
+  build-android:
+    name: Build Android Pre-bundled Trime APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout rime_liur
+        uses: actions/checkout@v4
+
+      - name: Setup Java Development Kit (JDK 21)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Android Build Tools
+        run: |
+          LATEST_BUILD_TOOLS=$(ls -1d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
+          echo "$LATEST_BUILD_TOOLS" >> $GITHUB_PATH
+          echo "Using Android Build Tools: $LATEST_BUILD_TOOLS"
+
+      - name: Fetch Latest Official Trime APK
+        id: trime_fetch
+        run: |
+          echo "正在查詢 osfans/trime 最新發布版本..."
+          RELEASE_JSON=$(curl -s https://api.github.com/repos/osfans/trime/releases/latest)
+          LATEST_TAG=$(echo "$RELEASE_JSON" | jq -r .tag_name)
+          APK_URL=$(echo "$RELEASE_JSON" | jq -r '.assets[] | select(.name | contains("arm64-v8a") and endswith(".apk")) | .browser_download_url' | head -n 1)
+          
+          if [ -z "$APK_URL" ] || [ "$APK_URL" = "null" ]; then
+            echo "找不到 arm64-v8a 資源，嘗試抓取通用 apk..."
+            APK_URL=$(echo "$RELEASE_JSON" | jq -r '.assets[] | select(.name | endswith(".apk")) | .browser_download_url' | head -n 1)
+          fi
+
+          echo "下載官方 Trime APK: $APK_URL"
+          curl -fL -o trime_official.apk "$APK_URL"
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+      - name: Inject Boshiamy Assets into Trime APK
+        run: |
+          python3 scripts/patch_trime_apk.py \
+            --src-apk trime_official.apk \
+            --rime-dir . \
+            --out-apk trime_injected.apk
+
+      - name: Align and Sign Injected Trime APK
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > release.jks
+          
+          # 4 位元組記憶體映射對齊
+          zipalign -f -p 4 trime_injected.apk aligned_temp.apk
+          
+          # apksigner 執行 v2/v3 數位簽章
+          apksigner sign \
+            --ks release.jks \
+            --ks-key-alias "${{ secrets.KEY_ALIAS }}" \
+            --ks-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --key-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --out trime-liur-${{ steps.trime_fetch.outputs.latest_tag }}.apk \
+            aligned_temp.apk
+
+      - name: Publish Android Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: trime-bundle
+          name: "📱 Android 同文輸入法嘸蝦米預裝版 (${{ steps.trime_fetch.outputs.latest_tag }})"
+          body: |
+            ### 📱 嘸蝦米 Liu - Android 同文輸入法預裝特製版
+
+            本 APK 已直接將 2026.11 最新旗艦主題、字典庫與手勢配置預裝於安裝包內，首開自動同步。
+
+            * **檔案名稱**：`trime-liur-${{ steps.trime_fetch.outputs.latest_tag }}.apk`
+            * **安裝方式**：直接下載並安裝此 APK。
+            * **開箱體驗**：
+              - **零匯入步驟**：免手動下載 ZIP 或檔案總管匯入，安裝打開即用。
+              - **預設為嘸蝦米**：啟動鍵盤預設即是嘸蝦米。
+              - **自帶 2026.11 旗艦版型**：包含 A 鍵熱區擴展、手勢複製貼上與 Google 語音長按。
+          files: |
+            trime-liur-*.apk

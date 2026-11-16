@@ -1,0 +1,77 @@
+name: Build Windows Weasel Setup
+
+on:
+  workflow_dispatch: # 純手動觸發，只有想發布 Windows 安裝包時才手動點擊
+
+jobs:
+  build-windows:
+    name: Build Windows Weasel One-Click Installer
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout rime_liur
+        uses: actions/checkout@v4
+
+      - name: Setup Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          "C:\Program Files (x86)\Inno Setup 6" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Fetch Latest Official Weasel Installer
+        id: weasel_fetch
+        shell: pwsh
+        run: |
+          Write-Host "正在查詢 rime/weasel 最新安裝包..."
+          $release = Invoke-RestMethod -Uri "https://api.github.com/repos/rime/weasel/releases/latest"
+          $tag = $release.tag_name
+          $asset = $release.assets | Where-Object { $_.name -like "*installer.exe" } | Select-Object -First 1
+          
+          New-Item -ItemType Directory -Force -Path "temp_weasel" | Out-Null
+          Write-Host "下載官方 Weasel: $($asset.browser_download_url)"
+          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "temp_weasel\weasel-installer.exe"
+          "latest_tag=$tag" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Prepare Inno Setup Workspace
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "rime_files" | Out-Null
+          
+          # 拷貝當前目錄之 yaml 與 txt 檔案
+          Get-ChildItem -Path "." -File | Where-Object { $_.Extension -in '.yaml', '.txt' } | ForEach-Object {
+              Copy-Item $_.FullName -Destination "rime_files" -Force
+          }
+          
+          # 拷貝 opencc 目錄
+          if (Test-Path "opencc") {
+              Copy-Item -Path "opencc" -Destination "rime_files\opencc" -Recurse -Force
+          }
+          Write-Host "已準備完成 Inno Setup 檔案結構。"
+
+      - name: Compile Weasel Inno Setup Installer
+        shell: pwsh
+        run: |
+          iscc scripts\weasel_installer.iss
+          if ($LASTEXITCODE -ne 0) { throw "iscc compilation failed with exit code $LASTEXITCODE" }
+          Move-Item -Path "dist\weasel-liur-setup.exe" -Destination "weasel-liur-setup-${{ steps.weasel_fetch.outputs.latest_tag }}.exe" -Force
+
+      - name: Publish Windows Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: weasel-bundle
+          name: "💻 Windows 小狼毫嘸蝦米一鍵安裝整合包 (${{ steps.weasel_fetch.outputs.latest_tag }})"
+          body: |
+            ### 💻 嘸蝦米 Liu - Windows 小狼毫一鍵安裝整合包
+
+            本安裝包內建官方小狼毫核心驅動與最新 2026.11 嘸蝦米字庫方案，實現完全靜默安裝。
+
+            * **檔案名稱**：`weasel-liur-setup-${{ steps.weasel_fetch.outputs.latest_tag }}.exe`
+            * **安裝方式**：下載此 `.exe` 檔案，直接雙擊執行！
+            * **開箱體驗**：
+              - **完全靜默無彈窗**：自動採用 NSIS 靜音模式，不跳任何安裝路徑或配色選單。
+              - **動態註冊表感知**：自動向 Windows 查詢當前真實 `RimeUserDir` 與 `WeaselRoot`。
+              - **全自動三合一**：安裝驅動 ➔ 拷貝字庫 ➔ 背景重新部署。完成後直接按 `Ctrl + \` 或 `F4` 即可打字！
+          files: |
+            weasel-liur-setup-*.exe
