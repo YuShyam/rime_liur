@@ -1,40 +1,57 @@
-@Echo off
+@echo off
 chcp 65001 >nul
-Color 0a
-Set UD=2024/04/16 By Shyam (2026/03/24 本地直推優化版)
-
-Title 小狼毫 - 嘸蝦米一鍵安裝 %UD%
+color 0a
+title 小狼毫 - 嘸蝦米一鍵安裝與部署 (Windows Weasel)
 
 echo ====================================================
-echo   開始安裝 Shyam 終極版 嘸蝦米 (Windows 小狼毫)
+echo   開始安裝 Shyam 特製版 嘸蝦米 (Windows 小狼毫)
+echo   【精準過濾：僅安裝設定與字典，不污染用戶目錄】
 echo ====================================================
+echo.
 
-echo [1/2] 正在將當前目錄的設定檔，拷貝至 Rime 用戶資料夾...
-:: %~dp0 代表此檔案所在的目錄，這將直接推播本地所有修改到 AppData
-Xcopy /E /Y /C /H "%~dp0*" "%AppData%\Rime\" >nul 2>&1
-
-echo [2/2] 觸發小狼毫自動重新部署...
-:: 搜尋 64 位元路徑下的 Deployer
-for /f "delims=" %%i in ('dir /s /b "C:\Program Files\Rime\WeaselDeployer.exe" 2^>nul') do (
-    "%%i" /deploy
-    goto DeployDone
+set "DEST=%AppData%\Rime"
+if not exist "%DEST%" (
+    echo [建立目錄] 正在建立 Rime 用戶資料夾: %DEST%
+    mkdir "%DEST%"
 )
 
-:: 搜尋 32 位元路徑下的 Deployer
-for /f "delims=" %%i in ('dir /s /b "C:\Program Files (x86)\Rime\WeaselDeployer.exe" 2^>nul') do (
-    "%%i" /deploy
-    goto DeployDone
+echo [1/2] 正在拷貝設定檔與字典至 %DEST% ...
+for %%F in ("%~dp0*.yaml" "%~dp0*.txt") do (
+    if exist "%%F" (
+        copy /y "%%F" "%DEST%\" >nul
+        echo   [更新設定] %%~nxF
+    )
 )
 
-Echo 找不到小狼毫 WeaselDeployer.exe，請您手動從工具列右鍵點擊「重新部署」。
-goto Cleanup
+if exist "%~dp0opencc\" (
+    if not exist "%DEST%\opencc" mkdir "%DEST%\opencc"
+    xcopy /e /y /q "%~dp0opencc" "%DEST%\opencc\" >nul
+    echo   [更新字表] opencc 目錄
+)
 
-:DeployDone
-Echo 重新部署指令已送出！
+echo.
+echo [2/2] 正在偵測小狼毫主程式並觸發重新部署...
 
-:Cleanup
+set "DEPLOYER="
+for /d %%D in ("%ProgramFiles%\Rime\weasel-*") do if exist "%%D\WeaselDeployer.exe" set "DEPLOYER=%%D\WeaselDeployer.exe"
+if not defined DEPLOYER for /d %%D in ("%ProgramFiles(x86)%\Rime\weasel-*") do if exist "%%D\WeaselDeployer.exe" set "DEPLOYER=%%D\WeaselDeployer.exe"
+if not defined DEPLOYER if exist "%ProgramFiles%\Rime\WeaselDeployer.exe" set "DEPLOYER=%ProgramFiles%\Rime\WeaselDeployer.exe"
+if not defined DEPLOYER if exist "%ProgramFiles(x86)%\Rime\WeaselDeployer.exe" set "DEPLOYER=%ProgramFiles(x86)%\Rime\WeaselDeployer.exe"
+
+if defined DEPLOYER (
+    echo [找到主程式] %DEPLOYER%
+    echo 正在送出重新部署指令 ^(/deploy^)...
+    "%DEPLOYER%" /deploy
+    echo [成功] 重新部署完成！
+) else (
+    echo [提示] 未能自動定位 WeaselDeployer.exe。
+    echo 請在右下角工作列的小狼毫圖示按右鍵，點擊「重新部署 ^[Deploy^]」即可套用。
+)
+
 echo.
 echo ====================================================
-echo   安裝完成！請按 Ctrl + \ 或 F4 切換至嘸蝦米。
+echo   安裝與部署流程已全數完成！
+echo   請按 Ctrl + \ 或 F4 切換至「嘸蝦米」開始打字。
 echo ====================================================
+echo.
 pause
